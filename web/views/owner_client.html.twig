@@ -23,7 +23,7 @@
                 <li>Email Address: {{account.getEmailAddress}}</li>
                 {% if account.getStudents is not empty %}
                 {% for student in account.getStudents %}
-                <li>Student Name: {{student.getName}}</li>
+                <li>Student Name:<a href="/owner_students/{{student.getId}}"></a> {{student.getName}}</li>
                 {% endfor %}
                 {% endif %}
             </ul>
@@ -50,15 +50,15 @@
         {% if selected_students is not empty %}
             {% for student in selected_students %}
                 <div class="panel panel-info">
-                    <h4 class="panel-heading">{{student.getName}}</h4>
+                    <h4 class="panel-heading"><a href="/owner_students/{{student.getId}}">{{student.getName}}</a></h4>
                     <ul>
                         {% if student.getCourses is not empty %}
                             {% for course in student.getCourses %}
-                                <li><strong>{{course.getTitle}}</strong></li>
+                                <li><strong><a href="/owner_courses/{{course.getId}}">{{course.getTitle}}</a></strong></li>
                                 {% if course.getLessons is not empty %}
                                     <ul>
                                         {% for lesson in course.getLessons %}
-                                            <li>{{lesson.getTitle}}</li>
+                                            <li><a href="/owner_lessons/{{lesson.getId}}">{{lesson.getTitle}}</a></li>
                                         {% endfor %}
                                     </ul>
                                 {% endif %}
@@ -97,6 +97,43 @@
             {% endif %}
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h3>Add Notes:</h3>
+        <hr>
+        <form action="/owner_accounts/{{ account.getId }}" method="post">
+            <input name="_method" type="hidden" value="patch">
+            <div class="form-group">
+                <label class ="control-label" for="new_notes">Notes</label><br>
+                <textarea class="form-control" name="new_notes" rows="10" cols="40"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-sm" name="button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- left column -->
+    <div class="col-md-4">
+        {% if notes_array is not empty %}
+        <div class="notes">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Note History:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for note in notes_array %}
+                <tr>
+                    <td><strong>{{ note }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+        {% endif %}
+    </div>
+    <!-- right column -->
 </div>
 
     {% endblock %}
