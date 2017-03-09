@@ -11,7 +11,8 @@
 <div class="row">
     <div class="col-sm-8">
         <h1>{{lesson.getTitle}}</h1>
-        <h4>{{lesson.getDescription}}</h4>
+        <h4><em>{{lesson.getDescription}}</em></h4>
+        <hr>
         <div class="well">
             <p>
                 {{lesson.getContent}}
@@ -19,22 +20,27 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <h3>Create another Lesson for a course</h3>
-        <form class="form-control" action="/add_lesson_to_course" method="post">
+        <h3>Add Another Lesson</h3>
+        <hr>
+        <form action="/add_lesson_to_course" method="post">
+            <div class="panel panel-info">
+                <div class="form-group">
+                <div class="panel-body">
+                    <select class="form-group" name="course_id">
+                        {% for course in school.getCourses %}
+                        <option value="{{course.getId}}">{{course.getTitle}}</option>
+                        {% endfor %}
+                    </select>
 
-            <select class="form-control" name="course_id">
-                {% for course in school.getCourses %}
-                    <option value="{{course.getId}}">{{course.getTitle}}</option>
-                {% endfor %}
-            </select>
-            <label for="title">Lesson title</label><br>
-            <input type="text" name="title" value=""><br>
-            <label for="description">Lesson Description</label><br>
-            <input type="text" name="description"><br>
-            <label for="content">Content</label><br>
-            <textarea name="content" rows="8" cols="40"></textarea>
-            <button type="submit">Add Lesson</button>
-        </form>
-    </div>
+                    <input type="text" name="title" placeholder="Lesson Title" class="form-control"><br>
+                    <input type="text" name="description" placeholder="Description" class="form-control"><br>
+                    <label for="content">Content</label><br>
+                    <textarea name="content" rows="8" cols="40"></textarea>
+                    <button type="submit">Add Lesson</button>
+                </div>
+                </form>
+            </div>
+        </div>
+</div>
 </div>
 {% endblock %}

@@ -117,7 +117,6 @@
         $teacher = Teacher::find($id);
         $notes_array = explode("|", $teacher->getNotes());
         $students_teachers = $teacher->getStudents();
-        var_dump($students_teachers);
         return $app['twig']->render('owner_teacher.html.twig', array('school' => $school, 'teacher' => $teacher, 'students_teachers' => $students_teachers, 'notes_array' => $notes_array, 'students' => $school->getStudents()));
     });
 
@@ -125,13 +124,10 @@
     $app->post("/owner_teachers/{id}", function($id) use ($app) {
         $school=School::find($_SESSION['school_id']);
         $teacher = Teacher::find($id);
-        echo $teacher->getName();
         $student = Student::find($_POST['student_id']);
-        echo $student->getName();
         $notes_array = explode("|", $teacher->getNotes());
         $teacher->addStudent($_POST['student_id']);
         $students_teachers = $teacher->getStudents();
-        var_dump($teacher->getStudents());
         return $app['twig']->render('owner_teacher.html.twig', array('school' => $school, 'teacher' => $teacher, 'students_teachers' => $students_teachers, 'notes_array' => $notes_array, 'students' => $school->getStudents()));
         // return $app->redirect("/owner_teachers/".$id);
     });
@@ -285,7 +281,6 @@
         $new_account->setBillingHistory($billing_history);
         $new_account->setOutstandingBalance($outstanding_balance);
         $new_account->save();
-        var_dump($new_account);
         $school->addAccount($new_account->getId());
 
         return $app['twig']->render('owner_clients.html.twig', array('school' => $school, 'accounts' => $school->getAccounts()));

@@ -70,6 +70,10 @@ h3 {
     width:100%;
     text-align: center;
 }
+
+#smallbutton {
+    margin-top: 5px;
+}
 .inner
 {
     display: inline-block;
